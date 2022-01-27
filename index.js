@@ -108,13 +108,13 @@ module.exports = Plugin => class DemoPlugin extends Plugin {
 				}
 			}
 
-			try {
+			/* try {
 				const user = await this.client.users.fetch(ticket.creator);
 				user.send({ files: [attachment] });
 			} catch (error) {
 				this.client.log.warn('Failed to send text transcript to the ticket creator');
 				this.client.log.error(error);
-			}
+			} */
 
 		});
 	}
