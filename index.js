@@ -1,4 +1,4 @@
-const DTF = require('@exce1sior/dtf');
+const DTF = require('@eartharoid/dtf');
 const dtf = new DTF();
 const {
 	MessageAttachment,
@@ -62,7 +62,7 @@ module.exports = Plugin => class DemoPlugin extends Plugin {
 
 				if (!user) continue;
 
-				const timestamp = dtf.fill('YYYY-MM-DD HH:mm:ss', new Date(ticket.createdAt), true);
+				const timestamp = dtf.fill('YYYY-MM-DD HH:mm:ss', new Date(ticket.createdAt), false);
 				const username = this.client.cryptr.decrypt(user.username);
 				const display_name = this.client.cryptr.decrypt(user.display_name);
 				const data = JSON.parse(this.client.cryptr.decrypt(message.data));
