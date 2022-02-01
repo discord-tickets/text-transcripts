@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/discord-tickets/text-transcripts#readme",
   "dependencies": {
-    "@eartharoid/dtf": "^2.0.0",
+    "@eartharoid/dtf": "^2.0.1",
     "discord.js": "^12.5.3",
     "fs-extra": "^9.1.0"
   },

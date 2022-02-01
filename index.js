@@ -1,4 +1,4 @@
-const DTF = require('@eartharoid/dtf');
+const DTF = require('@exce1sior/dtf');
 const dtf = new DTF();
 const {
 	MessageAttachment,
