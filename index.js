@@ -35,7 +35,7 @@ module.exports = Plugin => class DemoPlugin extends Plugin {
 			if (!creator) return this.client.log.warn(`Can't create text transcript for ticket #${ticket.number} due to missing creator`);
 
 			const lines = [];
-			lines.push(`Ticket ${ticket.number}, created by ${this.client.cryptr.decrypt(creator.username)}#${creator.discriminator}, ${ticket.createdAt}\n`);
+			lines.push(`Ticket ${ticket.number}, created by ${this.client.cryptr.decrypt(creator.username)}#${creator.discriminator}, ${dtf.fill('YYYY-MM-DD HH:mm:ss', new Date(ticket.createdAt), true)} UTC\n`);
 
 			let closer;
 
@@ -62,7 +62,7 @@ module.exports = Plugin => class DemoPlugin extends Plugin {
 
 				if (!user) continue;
 
-				const timestamp = dtf.fill('YYYY-MM-DD HH:mm:ss', new Date(ticket.createdAt), false);
+				const timestamp = dtf.fill('YYYY-MM-DD HH:mm:ss', new Date(ticket.createdAt), true);
 				const username = this.client.cryptr.decrypt(user.username);
 				const display_name = this.client.cryptr.decrypt(user.display_name);
 				const data = JSON.parse(this.client.cryptr.decrypt(message.data));
