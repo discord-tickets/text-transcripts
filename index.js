@@ -4,6 +4,7 @@ const {
 	MessageAttachment,
 	MessageEmbed
 } = require('discord.js');
+const { send } = require('express/lib/response');
 
 module.exports = Plugin => class DemoPlugin extends Plugin {
 	constructor(client, id) {
@@ -35,7 +36,7 @@ module.exports = Plugin => class DemoPlugin extends Plugin {
 			if (!creator) return this.client.log.warn(`Can't create text transcript for ticket #${ticket.number} due to missing creator`);
 
 			const lines = [];
-			lines.push(`Ticket ${ticket.number}, created by ${this.client.cryptr.decrypt(creator.username)}#${creator.discriminator}, ${dtf.fill('YYYY-MM-DD HH:mm:ss', new Date(ticket.createdAt), true)} UTC\n`);
+			lines.push(`Ticket ${ticket.number}, created by ${this.client.cryptr.decrypt(creator.username)}#${creator.discriminator}, ${dtf.fill('DD-MM-YYYY HH:mm:ss', new Date(ticket.createdAt), true)} UTC\n`);
 
 			let closer;
 
@@ -62,10 +63,11 @@ module.exports = Plugin => class DemoPlugin extends Plugin {
 
 				if (!user) continue;
 
-				const timestamp = dtf.fill('YYYY-MM-DD HH:mm:ss', new Date(ticket.createdAt), true);
+				const timestamp = dtf.fill('DD-MM-YYYY HH:mm:ss', new Date(ticket.createdAt), true);
 				const username = this.client.cryptr.decrypt(user.username);
 				const display_name = this.client.cryptr.decrypt(user.display_name);
 				const data = JSON.parse(this.client.cryptr.decrypt(message.data));
+			
 				let content = data.content ? data.content.replace(/\n/g, '\n\t') : '';
 				data.attachments?.forEach(a => {
 					content += '\n\t' + a.url;
@@ -83,6 +85,7 @@ module.exports = Plugin => class DemoPlugin extends Plugin {
 
 			const attachment = new MessageAttachment(Buffer.from(lines.join('\n')), channel_name + '.txt');
 
+			var cont = `Ticket ${ticket.number}, created by ${this.client.cryptr.decrypt(creator.username)}#${creator.discriminator} at ${dtf.fill('DD-MM-YYYY HH:mm:ss', new Date(ticket.createdAt), true)} UTC`
 			if (this.config.channels[guild.id]) {
 				try {
 					const g = await this.client.guilds.fetch(guild.id);
@@ -100,7 +103,8 @@ module.exports = Plugin => class DemoPlugin extends Plugin {
 					const log_channel = await this.client.channels.fetch(this.config.channels[guild.id]);
 					await log_channel.send({
 						embed,
-						files: [attachment]
+						files: [attachment],
+						content: cont,
 					});
 				} catch (error) {
 					this.client.log.warn('Failed to send text transcript to the guild\'s log channel');
