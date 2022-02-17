@@ -4,7 +4,6 @@ const {
 	MessageAttachment,
 	MessageEmbed
 } = require('discord.js');
-const { send } = require('express/lib/response');
 
 module.exports = Plugin => class DemoPlugin extends Plugin {
 	constructor(client, id) {
@@ -85,7 +84,7 @@ module.exports = Plugin => class DemoPlugin extends Plugin {
 
 			const attachment = new MessageAttachment(Buffer.from(lines.join('\n')), channel_name + '.txt');
 
-			var cont = `Ticket ${ticket.number}, created by ${this.client.cryptr.decrypt(creator.username)}#${creator.discriminator} (${creator.user}) at ${dtf.fill('DD-MM-YYYY HH:mm:ss', new Date(ticket.createdAt), true)} UTC`
+			var cont = `Ticket ${ticket.number}, created by ${this.client.cryptr.decrypt(creator.username)}#${creator.discriminator} \`${creator.user}\`  \n Category: ${category.name} \n Created at: ${dtf.fill('DD-MM-YYYY HH:mm:ss', new Date(ticket.createdAt), true)} UTC`
 			if (this.config.channels[guild.id]) {
 				try {
 					const g = await this.client.guilds.fetch(guild.id);
@@ -112,13 +111,13 @@ module.exports = Plugin => class DemoPlugin extends Plugin {
 				}
 			}
 
-			/* try {
+			try {
 				const user = await this.client.users.fetch(ticket.creator);
 				user.send({ files: [attachment] });
 			} catch (error) {
 				this.client.log.warn('Failed to send text transcript to the ticket creator');
 				this.client.log.error(error);
-			} */
+			}
 
 		});
 	}
