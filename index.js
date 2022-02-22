@@ -84,7 +84,7 @@ module.exports = Plugin => class DemoPlugin extends Plugin {
 
 			const attachment = new MessageAttachment(Buffer.from(lines.join('\n')), channel_name + '.txt');
 
-			var log_msg = `Ticket ${ticket.number}, created by ${this.client.cryptr.decrypt(creator.username)}#${creator.discriminator} \`${creator.user}\`  \n Category: ${category.name} \n Created at: ${dtf.fill('DD-MM-YYYY HH:mm:ss', new Date(ticket.createdAt), true)} UTC`
+			var log_msg = `Ticket ${ticket.number}, created by ${this.client.cryptr.decrypt(creator.username)}#${creator.discriminator} \`${creator.user}\`\nCategory: ${category.name}\nCreated at: ${dtf.fill('DD-MM-YYYY HH:mm:ss', new Date(ticket.createdAt), true)} UTC`
 			if (this.config.channels[guild.id]) {
 				try {
 					const g = await this.client.guilds.fetch(guild.id);
