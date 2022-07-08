@@ -99,7 +99,7 @@ module.exports = Plugin => class DemoPlugin extends Plugin {
 
 					const log_channel = await this.client.channels.fetch(this.config.channels[guild.id]);
 					await log_channel.send({
-						embed,
+						embeds: [embed],
 						files: [attachment]
 					});
 				} catch (error) {
